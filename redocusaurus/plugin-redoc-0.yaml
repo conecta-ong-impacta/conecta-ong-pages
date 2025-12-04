@@ -1,0 +1,405 @@
+openapi: 3.0.1
+info:
+  title: APIConectaONG
+  version: '1.0'
+paths:
+  /api/Autenticacao/registrar:
+    post:
+      tags:
+        - Autenticacao
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrarRequestDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RegistrarRequestDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RegistrarRequestDTO'
+      responses:
+        '200':
+          description: OK
+  /api/Autenticacao/login:
+    post:
+      tags:
+        - Autenticacao
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDto'
+      responses:
+        '200':
+          description: OK
+  /api/Conexao:
+    get:
+      tags:
+        - Conexao
+      responses:
+        '200':
+          description: OK
+  /api/Evento/registrar:
+    post:
+      tags:
+        - Evento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventoDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/EventoDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/EventoDTO'
+      responses:
+        '200':
+          description: OK
+  /api/Evento:
+    get:
+      tags:
+        - Evento
+      responses:
+        '200':
+          description: OK
+  /api/Evento/{id}:
+    get:
+      tags:
+        - Evento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+        - Evento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+    put:
+      tags:
+        - Evento
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventoDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/EventoDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/EventoDTO'
+      responses:
+        '200':
+          description: OK
+  /api/Foto/temporaria:
+    post:
+      tags:
+        - Foto
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                style: form
+      responses:
+        '200':
+          description: OK
+  /api/Foto/perfil:
+    put:
+      tags:
+        - Foto
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                style: form
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags:
+        - Foto
+      responses:
+        '200':
+          description: OK
+  /api/Ong:
+    get:
+      tags:
+        - Ong
+      responses:
+        '200':
+          description: OK
+  /api/Ong/{id}:
+    get:
+      tags:
+        - Ong
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /api/Usuario:
+    get:
+      tags:
+        - Usuario
+      responses:
+        '200':
+          description: OK
+    put:
+      tags:
+        - Usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UsuarioDTO'
+      responses:
+        '200':
+          description: OK
+  /api/Usuario/senha:
+    put:
+      tags:
+        - Usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlterarSenhaRequestDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AlterarSenhaRequestDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AlterarSenhaRequestDTO'
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    AlterarSenhaRequestDTO:
+      type: object
+      properties:
+        senhaAtual:
+          type: string
+          nullable: true
+        novaSenha:
+          type: string
+          nullable: true
+        confirmarNovaSenha:
+          type: string
+          nullable: true
+      additionalProperties: false
+    EventoDTO:
+      type: object
+      properties:
+        ongId:
+          type: integer
+          format: int32
+        eventoId:
+          type: integer
+          format: int32
+        nome:
+          type: string
+          nullable: true
+        descricao:
+          type: string
+          nullable: true
+        local:
+          type: string
+          nullable: true
+        categoriaId:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+        tipoEventoId:
+          type: integer
+          format: int32
+        dataEvento:
+          type: string
+          format: date-time
+        dataFim:
+          type: string
+          format: date-time
+        bannerEvento:
+          type: string
+          nullable: true
+      additionalProperties: false
+    LoginRequestDto:
+      required:
+        - email
+        - senha
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        senha:
+          type: string
+          nullable: true
+      additionalProperties: false
+    RegistrarRequestDTO:
+      type: object
+      properties:
+        isOng:
+          type: boolean
+        isVoluntario:
+          type: boolean
+        nome:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        senha:
+          type: string
+          nullable: true
+        confirmarSenha:
+          type: string
+          nullable: true
+        cep:
+          type: string
+          nullable: true
+        tempIdFoto:
+          type: string
+          nullable: true
+        documento:
+          type: string
+          nullable: true
+        chavesDePagamento:
+          type: array
+          items:
+            type: string
+          nullable: true
+        redesSociais:
+          type: array
+          items:
+            type: string
+          nullable: true
+        descricao:
+          type: string
+          nullable: true
+        isDoador:
+          type: boolean
+        isFilantropo:
+          type: boolean
+        isPJ:
+          type: boolean
+        isPF:
+          type: boolean
+        categoriaIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+      additionalProperties: false
+    UsuarioDTO:
+      type: object
+      properties:
+        loginId:
+          type: integer
+          format: int32
+        isOng:
+          type: boolean
+        isVoluntario:
+          type: boolean
+        nome:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        cep:
+          type: string
+          nullable: true
+        foto:
+          type: string
+          nullable: true
+        documento:
+          type: string
+          nullable: true
+        chavesDePagamento:
+          type: array
+          items:
+            type: string
+          nullable: true
+        redesSociais:
+          type: array
+          items:
+            type: string
+          nullable: true
+        descricao:
+          type: string
+          nullable: true
+        isDoador:
+          type: boolean
+        isFilantropo:
+          type: boolean
+        isPJ:
+          type: boolean
+        isPF:
+          type: boolean
+        categoriaIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+      additionalProperties: false
