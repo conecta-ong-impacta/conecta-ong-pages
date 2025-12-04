@@ -3,7 +3,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Conecta ONG Docs', // Mudei o título
+  title: 'Conecta ONG - Documentação',
   tagline: 'Documentação da API e Guias',
   favicon: 'img/favicon.ico',
 
@@ -19,7 +19,7 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
-    defaultLocale: 'pt-br', // Mudei para português
+    defaultLocale: 'pt-br',
     locales: ['pt-br'],
   },
 
@@ -32,24 +32,24 @@ const config = {
           sidebarPath: './sidebars.js',
           editUrl: 'https://github.com/conecta-ong-impacta/conecta-ong-pages/tree/main/',
         },
-        blog: false, // Desativei o blog por enquanto (mude para {} se quiser usar)
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
       }),
     ],
-    // --- AQUI ENTRA O REDOCUSAURUS ---
+
     [
       'redocusaurus',
       {
         specs: [
           {
-            spec: 'swagger.json', // O arquivo que está na raiz
-            route: '/api/',       // A URL onde vai aparecer
+            spec: 'swagger.json',
+            route: '/api/', 
           },
         ],
         theme: {
-          primaryColor: '#25c2a0', // Uma cor verde bonita (opcional)
+          primaryColor: '#FF7C34',
         },
       },
     ],
@@ -59,7 +59,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/logo-social-card.png',
       navbar: {
         title: 'Conecta ONG',
         logo: {
@@ -67,16 +67,21 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutoriais',
-          },
+          // {
+          //   type: 'docSidebar',
+          //   sidebarId: 'tutorialSidebar',
+          //   position: 'left',
+          //   label: 'Começando',
+          // },
           // --- LINK PARA A SUA API ---
           { 
             to: '/api/', 
             label: 'API Reference', 
+            position: 'left' 
+          },          
+          { 
+            to: '/devs/', 
+            label: 'Colaboradores', 
             position: 'left' 
           },
           // ---------------------------
@@ -93,8 +98,9 @@ const config = {
           {
             title: 'Docs',
             items: [
-              { label: 'Começando', to: '/docs/intro' },
+              // { label: 'Começando', to: '/docs/intro' },
               { label: 'API Reference', to: '/api/' },
+              { label: 'Colaboradores', to: '/devs/' },
             ],
           },
           {
@@ -107,7 +113,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Conecta ONG. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Conecta ONG.`,
       },
       prism: {
         theme: prismThemes.github,
