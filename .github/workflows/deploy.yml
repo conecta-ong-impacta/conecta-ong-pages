@@ -1,0 +1,33 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches:
+      - main # Garanta que o nome da sua branch principal é 'main'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Gerar HTML da Documentação
+        # Este comando transforma o JSON em index.html usando o Redoc
+        run: npx redoc-cli bundle swagger.json -o index.html
+
+      - name: Deploy para o GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./ # Pasta onde o index.html foi gerado
+          publish_branch: gh-pages # Branch onde o site vai viver
+          keep_files: false
