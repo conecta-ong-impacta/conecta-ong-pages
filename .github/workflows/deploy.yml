@@ -1,4 +1,4 @@
-name: Deploy Documentation
+name: Deploy Docusaurus
 
 on:
   push:
@@ -9,19 +9,28 @@ permissions:
   contents: write
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout do código
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # NÃO precisamos mais do setup-node nem do redoc-cli
-      # porque o index.html já existe no seu repositório.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      - name: Deploy para o GitHub Pages
+      - name: Instalar Dependências
+        run: npm install
+
+      - name: Build do Site
+        run: npm run build
+
+      - name: Deploy para GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./ # Pega todos os arquivos da raiz (index.html e swagger.json)
+          publish_dir: ./build  # O Docusaurus gera o site nesta pasta 'build'
           publish_branch: gh-pages
-          keep_files: false
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
